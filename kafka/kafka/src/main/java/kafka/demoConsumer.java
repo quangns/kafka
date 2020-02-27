@@ -5,7 +5,7 @@ package kafka;
 
 
 import api.APIKafka;
-import consumer.impl.ConsumerKafkaImpl;
+import consumer.ConsumerKafka;
 import entity.MessageObject;
 import producer.ProduceKafka;
 
@@ -24,8 +24,9 @@ public class demoConsumer {
 		try {
 			MessageObject mesObj = new MessageObject();
 			mesObj.setTOPIC_NAME("test");
-			for (int i = 3; i < 4; i++) {
+			for (int i = 1; i < 4; i++) {
 				mesObj.setMessage("test" + i);
+//				mesObj.setMessage("test");
 				produce.run(mesObj);
 			}
 		} catch (Exception e) {
@@ -33,7 +34,7 @@ public class demoConsumer {
 			e.printStackTrace();
 		}
 		
-		APIKafka conKafka = new ConsumerKafkaImpl();
+		APIKafka conKafka = new ConsumerKafka();
 		try {
 			MessageObject mesObj1 = new MessageObject();
 			mesObj1.setTOPIC_NAME("test");

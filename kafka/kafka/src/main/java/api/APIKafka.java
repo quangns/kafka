@@ -13,5 +13,5 @@ import entity.MessageObject;
  */
 public abstract class APIKafka {
 	protected abstract Closeable createProperty();
-	public abstract void run(MessageObject mesObj);
+	public abstract Object run(MessageObject mesObj) throws Exception;
 }

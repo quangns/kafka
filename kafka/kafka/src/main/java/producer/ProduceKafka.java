@@ -13,6 +13,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import api.APIKafka;
 import entity.MessageObject;
+import exception.NonAttributeException;
+import exception.TopicDontExistsExcepttion;
 import properties.PropertyFile;
 import topic.TopicKafka;
 import topic.impl.TopicKafkaImpl;
@@ -32,8 +34,9 @@ public class ProduceKafka extends APIKafka {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void run(MessageObject mesObj) {
+	public Object run(MessageObject mesObj) throws Exception{
 		final Producer<Long, String> producer = (Producer<Long, String>) createProperty();
+		Object objectToPush = null;
 		try {
 			TopicKafka varTopic = new TopicKafkaImpl();
 			if(varTopic.checkNameTopicExists(mesObj.getTOPIC_NAME())) {
@@ -46,13 +49,21 @@ public class ProduceKafka extends APIKafka {
 	                        "meta(partition=%d, offset=%d) time=%d\n",
 	                        record.key(), record.value(), metadata.partition(),
 	                        metadata.offset(), elapsedTime);
+				objectToPush = mesObj.getMessage();
+			} else {
+				throw new TopicDontExistsExcepttion();
 			}
+		} catch (NullPointerException e) {
+			throw new NonAttributeException();
+		} catch (TopicDontExistsExcepttion e) {
+			throw new TopicDontExistsExcepttion();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 		} finally {
 			producer.flush();
 			producer.close();
 		}
+		return objectToPush;
 	}
 	
 }
