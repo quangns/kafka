@@ -3,11 +3,11 @@
  */
 package kafka;
 
-
-import api.APIKafka;
 import consumer.ConsumerKafka;
+import consumer.impl.ConsumerKafkaImpl;
 import entity.MessageObject;
 import producer.ProduceKafka;
+import producer.impl.ProduceKafkaImpl;
 
 /**
  * @author quangns
@@ -20,21 +20,21 @@ public class demoConsumer {
 	 */
 	public static void main(String[] args) {
 		
-		APIKafka produce = new ProduceKafka();
+		ProduceKafka produce = new ProduceKafkaImpl();
 		try {
 			MessageObject mesObj = new MessageObject();
 			mesObj.setTOPIC_NAME("test");
 			for (int i = 1; i < 4; i++) {
 				mesObj.setMessage("test" + i);
 //				mesObj.setMessage("test");
-				produce.run(mesObj);
+				produce.runProduceKafka(mesObj);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		APIKafka conKafka = new ConsumerKafka();
+		ConsumerKafka conKafka = new ConsumerKafkaImpl();
 		try {
 			MessageObject mesObj1 = new MessageObject();
 			mesObj1.setTOPIC_NAME("test");

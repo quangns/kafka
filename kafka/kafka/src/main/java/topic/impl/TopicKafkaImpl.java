@@ -33,8 +33,7 @@ public class TopicKafkaImpl implements TopicKafka {
         return adminClient;
 	}
 
-	@Override
-	public boolean checkNameTopicExists(String nameTopic) {
+	public boolean checkNameTopicExists(final String nameTopic) {
 		ValidateKafka varVal = new ValidateKafka();
 		boolean checkNameExists = false;
 		if(! varVal.checkStringNull(nameTopic)) {
@@ -44,7 +43,6 @@ public class TopicKafkaImpl implements TopicKafka {
 		return checkNameExists;
 	}
 
-	@Override
 	public Set<String> showlistTopic() {
 		final AdminClient adminClient = createProperty();
 		Set<String> topics = null;

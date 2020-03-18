@@ -10,6 +10,6 @@ import java.util.Set;
  *
  */
 public interface TopicKafka {
-	public boolean checkNameTopicExists(final String nameTopic);
-	public Set<String> showlistTopic();
+	boolean checkNameTopicExists(final String nameTopic);
+	Set<String> showlistTopic();
 }
